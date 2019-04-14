@@ -278,5 +278,6 @@ for i in range(numberPreprints):
                 f.write(preprint_id + '\n')
             write_log(f'Wrote {current_preprint["id"]} to log')
             preprints_added += 1
-            time.sleep(30)
+            time.sleep(30) # Currently set to wait 30 sec after each tweet for testing purposes. Should be increased when running for real (likely to 1800).
+            ## Need to set a better solution for looping through the script. Considering Daemon or Cron
 write_log(f'All preprints checked. Processed {preprints_added} new preprints. Tweeted {preprints_tweeted}, failed to tweet {preprints_tweeted_FAILED}.')
