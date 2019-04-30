@@ -34,6 +34,9 @@ def tweet_image(url, message):
 def prepare_tweet(title, author, preprintURL):
     ## Tweet format : {TITLE} by {AUTHOR} \n {DOI URL} [thumbnail image]
 
+    ## Add a block that determines if the paper had more than one author
+    ## and selectively appends (or doesn't append) "& co-workers"
+
     tweetText = f'{title} by {author} & co-workers' + "\n\n" + preprintURL
 
     ## Need to make sure the total length of the tweet is <280 characters
@@ -236,6 +239,9 @@ for i in range(numberPreprints):
             ## enumerate this for preprints we're going to
             ## actually tweet)
 
+            ## Need to provide accomodations to not tweet revisions.
+            ## Metadata field 'version' likely holds what we would need to exclude.
+
             current_preprint = api.preprint(preprint_id)
 
             ## Collect the information needed for the tweet
@@ -278,6 +284,6 @@ for i in range(numberPreprints):
                 f.write(preprint_id + '\n')
             write_log(f'Wrote {current_preprint["id"]} to log')
             preprints_added += 1
-            time.sleep(30) # Currently set to wait 30 sec after each tweet for testing purposes. Should be increased when running for real (likely to 1800).
+            time.sleep(1800) # Currently set to wait 30 sec after each tweet for testing purposes. Should be increased when running for real (likely to 1800).
             ## Need to set a better solution for looping through the script. Considering Daemon or Cron
 write_log(f'All preprints checked. Processed {preprints_added} new preprints. Tweeted {preprints_tweeted}, failed to tweet {preprints_tweeted_FAILED}.')
